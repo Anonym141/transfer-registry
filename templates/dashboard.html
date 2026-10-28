@@ -1,0 +1,90 @@
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard — Nexus Transfer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark small-mark">N</span>
+      <span>NEXUS <b>TRANSFER</b></span>
+    </div>
+
+    <form method="post" action="{{ url_for('logout') }}">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <button class="secondary" type="submit">Keluar</button>
+    </form>
+  </header>
+
+  <main class="content">
+    <p class="eyebrow">CONTROL CENTER</p>
+    <h1>Registry dashboard</h1>
+    <p class="muted">
+      URL tunnel yang terdaftar akan kedaluwarsa jika pengirim
+      tidak memperbarui registrasi.
+    </p>
+
+    <section class="stats">
+      <div class="panel stat">
+        <span class="muted">Sesi terdaftar</span>
+        <strong>{{ rows|length }}</strong>
+      </div>
+      <div class="panel stat">
+        <span class="muted">Masa berlaku registrasi</span>
+        <strong>5 menit</strong>
+      </div>
+    </section>
+
+    <section class="panel table-panel">
+      <div class="section-head">
+        <h2>Koneksi terdaftar</h2>
+        <a href="{{ url_for('dashboard') }}">Muat ulang</a>
+      </div>
+
+      {% if rows %}
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Kode ruang</th>
+              <th>URL tunnel</th>
+              <th>Terakhir diperbarui (UTC)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in rows %}
+            <tr>
+              <td><code>{{ row.room }}</code></td>
+              <td>
+                <a href="{{ row.url }}" target="_blank" rel="noopener noreferrer">
+                  {{ row.url }}
+                </a>
+              </td>
+              <td>{{ row.updated }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="empty">
+        <div class="empty-icon">↗</div>
+        <h3>Belum ada koneksi aktif</h3>
+        <p class="muted">
+          Jalankan pengirim setelah konfigurasi registry selesai.
+        </p>
+      </div>
+      {% endif %}
+    </section>
+
+    <p class="footnote">
+      Token transfer tidak ditampilkan di dashboard.
+      Jangan membagikan kunci API atau kode ruang secara publik.
+    </p>
+  </main>
+</body>
+</html>

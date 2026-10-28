@@ -1,0 +1,41 @@
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login — Nexus Transfer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="auth-wrap">
+    <section class="panel auth-panel">
+      <div class="brand-mark">N</div>
+      <p class="eyebrow">NEXUS TRANSFER</p>
+      <h1>Selamat datang</h1>
+      <p class="muted">Login untuk memantau koneksi transfer.</p>
+
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <form method="post">
+        <label for="password">Password dashboard</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Masukkan password"
+          required
+        >
+        <button type="submit">Masuk ke dashboard</button>
+      </form>
+
+      <p class="small muted">
+        Akses administrator. Jangan bagikan kredensial login.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

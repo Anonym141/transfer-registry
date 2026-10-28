@@ -1,0 +1,20 @@
+
+services:
+  - type: web
+    name: transfer-registry
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --threads 8 --timeout 30
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: DASHBOARD_PASSWORD
+        sync: false
+      - key: REGISTRY_ADMIN_TOKEN
+        generateValue: true
+      - key: CLIENT_LOOKUP_KEY
+        generateValue: true
